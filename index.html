@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Interaktivní mobilní náhled DSO — Digitální Správa Objektů." />
+    <title>DSO · mobile UI preview</title>
+    <link rel="icon" href="./assets/app-icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <script>
+      if (window.matchMedia('(max-width: 520px)').matches) {
+        window.location.replace('./app/?v=104-native-4');
+      }
+    </script>
+    <link rel="stylesheet" href="./styles.css?v=104-native-4" />
+  </head>
+  <body>
+    <main class="preview-shell">
+      <header class="preview-header">
+        <div class="preview-brand">
+          <img src="./assets/app-icon.svg" alt="" />
+          <div>
+            <span>DSO V104</span>
+            <strong>Digitální Správa Objektů · Android preview</strong>
+          </div>
+        </div>
+        <a href="./app/?v=104-native-4" target="_blank" rel="noreferrer">Otevřít samostatně</a>
+      </header>
+      <div class="phone" aria-label="Interaktivní mobilní náhled DSO">
+        <iframe src="./app/?v=104-native-4" title="DSO — Digitální Správa Objektů"></iframe>
+      </div>
+      <p class="preview-note">V104 · Ukázková data a ilustrační fotografie · Bez přístupu k telefonu a zákaznickým údajům · Změny se po obnovení stránky zruší.</p>
+    </main>
+    <script src="./app.js?v=104-native-4"></script>
+  </body>
+</html>

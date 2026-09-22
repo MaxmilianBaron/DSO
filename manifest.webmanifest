@@ -1,0 +1,19 @@
+{
+  "name": "DSO — Digitální Správa Objektů UI Preview",
+  "short_name": "DSO Preview",
+  "description": "Safe interactive UI mirror of the DSO Android application.",
+  "lang": "cs",
+  "start_url": "./app/?v=104-native-4",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "./assets/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+name: Free DSO UI preview smoke
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ui-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Test preview model
+        run: node --test tests/*.test.mjs
+
+      - name: Install Playwright test runner
+        run: npm install --no-save --package-lock=false @playwright/test@1.55.0
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run static server and UI smoke tests
+        env:
+          PREVIEW_URL: http://127.0.0.1:4173/
+        run: |
+          node scripts/serve-demo.mjs 4173 > /tmp/dso-preview.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then
+              npx playwright test e2e/preview.spec.mjs --workers=1 --reporter=line
+              exit $?
+            fi
+            sleep 1
+          done
+          cat /tmp/dso-preview.log
+          exit 1
+
+      - name: Upload UI screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dso-pages-ui-screenshots
+          path: artifacts/ui
+          if-no-files-found: warn
+          retention-days: 5
